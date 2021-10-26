@@ -5,6 +5,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+from datetime import datetime
 
 class GoogleSheet:
     def __init__(self) -> None:
@@ -32,10 +33,11 @@ class GoogleSheet:
 
         return service
     
-    def create_sheet(self, sheet_name, rows: List = ["URL", "ProductName", "Availability", "Offer", "Product Price", "Sale Price"]):
+    def create_sheet(self, sheet_name, rows: List = ["URL", "Product Code", "ProductName", "Availability", "Offer", "Product Price", "Sale Price"]):
+        current_time = datetime.now().strftime("%Y-%m-%d-%H")
         spreadsheet = {
             'properties': {
-                'title': sheet_name
+                'title': f"{sheet_name}_{current_time}"
             }
         }
         self.spreadsheet = self.service.spreadsheets().create(body=spreadsheet,

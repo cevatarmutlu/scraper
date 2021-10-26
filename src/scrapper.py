@@ -39,7 +39,15 @@ def getProductAvailability(page):
     passiveTagSize = len(passiveTags)
     
     productAvailability = (aTagSize - passiveTagSize) * 100 / aTagSize
-    return f"{productAvailability}%"
+    return f"{str(round(productAvailability, 2)).replace('.', ',')}%"
+
+def getProductCode(page):
+    productCode = page.find("div", {"class": "product-feature-content"}).contents[-1]
+    if productCode == "\n":
+        productCode = page.find("div", {"class": "product-feature-content"}).find("div", {"style": "text-align: left;"}).contents[-1]
+    # elif productCode.find("Yerli üretim"):
+    #     productCode = productCode.split("Yerli üretim")[1]
+    return 0 if productCode == None else productCode.strip()
 
 def scrapper(url):
     page = isProductPage(url=url)
@@ -57,6 +65,12 @@ def scrapper(url):
             
         productAvailability = getProductAvailability(page)
 
-        return [url, productName, productAvailability, offer, productPrice, salePrice]
+        productCode = getProductCode(page)
+
+        return [url, productCode ,productName, productAvailability, offer, productPrice, salePrice]
     else:
         return None
+
+if __name__ == '__main__':
+    url = "https://www.markastok.com/le-ville-tac-orgu-sac-asa-hediye-karlar-ulkesi-kralicesi-elsa-kiz-cocuk-elbise-5804646-mavi"
+    print(scrapper(url))
