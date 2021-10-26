@@ -1,5 +1,4 @@
 from __future__ import print_function
-from datetime import datetime
 import os.path
 from typing import List
 from googleapiclient.discovery import build
@@ -33,7 +32,7 @@ class GoogleSheet:
 
         return service
     
-    def create_sheet(self, sheet_name, rows: List = ["URL", "SKU", "ProductName", "Availability", "Offer", "Sale Price"]):
+    def create_sheet(self, sheet_name, rows: List = ["URL", "ProductName", "Availability", "Offer", "Product Price", "Sale Price"]):
         spreadsheet = {
             'properties': {
                 'title': sheet_name
