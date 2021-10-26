@@ -20,16 +20,16 @@ def getProductName(page):
 
 
 def getOffer(priceDiscountSec):
-    offer = priceDiscountSec.find("div", {"class": "detay-indirim"}).text.strip()
-    return offer
+    offer = priceDiscountSec.find("div", {"class": "detay-indirim"})
+    return 0 if offer == None else offer.text.strip()
 
 def getProductPrice(priceDiscountSec):
-    productPrice = priceDiscountSec.find("span", {"class": "currencyPrice discountedPrice"}).text.replace("TL", "").strip()
-    return productPrice
+    productPrice = priceDiscountSec.find("span", {"class": "currencyPrice discountedPrice"})
+    return 0 if productPrice == None else productPrice.text.replace("TL", "").strip()
 
 def getSalePrice(priceDiscountSec):
-    salePrice = priceDiscountSec.find("span", {"class": "product-price"}).text.strip()
-    return salePrice
+    salePrice = priceDiscountSec.find("span", {"class": "product-price"})
+    return 0 if salePrice == None else salePrice.text.strip()
 
 def getProductAvailability(page):
     newSizeVariant = page.find("div", {"class": re.compile("new-size-variant")})
@@ -39,7 +39,7 @@ def getProductAvailability(page):
     passiveTagSize = len(passiveTags)
     
     productAvailability = (aTagSize - passiveTagSize) * 100 / aTagSize
-    return productAvailability
+    return f"{productAvailability}%"
 
 def scrapper(url):
     page = isProductPage(url=url)
