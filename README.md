@@ -29,13 +29,11 @@ i was know BeautifulSoup and Selenium modules, so to scrape what should i use i 
 
 I was not know to createing google spreadsheet with API. This part of project was challange for me. Firstly i read google document so fastly and i was unsuccessful to create sheet. Then i was calmdown myself and i read document slowly. I was succesfull to create sheet in my gmail account.
 
-i wasn't know that thing Google Apps Script. This was challange for me again. I read the document and open Script editor from Sheet UI. 
-
-i searched `google app script sort sheet` in google and what i find is `sort` function. Sort function solved the first problem. Second problem is send mail with attachment. For this i searched `google app script send email with attachment` in Google and what i find is to access the sheet file use Drive. I use `DriveApp` to get sheet file. For send mail i use MailApp.
+I wasn't know that thing Google Apps Script. This was challange for me again. I read the document and open Script editor from Sheet UI. I searched `google app script sort sheet` in google and what i find is `sort` function. Sort function solved the first problem. Second problem is send mail with attachment. For this i searched `google app script send email with attachment` in Google and what i find is to access the sheet file use Drive. I use `DriveApp` to get sheet file. For send mail i use MailApp.
 
 ## What did i learn from this project?
 
-Google app script and Google Sheet API.
+use Google app script and Google Sheet API.
 
 ## Additional questions
 
@@ -47,6 +45,10 @@ Parallelism. For example, the file can be split into parts and each part can be 
 
 Crontab or Airflow.
 
+Crontab kullanmadım fakat yazdığımız script' i günde bir kez çalıştırabiliriz.
+
+Airflow creates flows. Flow is a combination of tasks. We can run this project in airflow by dividing it into tasks.
+
 ### 3. Please briefly explain what an API is and how it works.
 
-API provides communication between two systems. It uses HTTP requests.
+API provides communication between two systems. It uses HTTP requests. For example, when a user registers on the frontend, it sends this information on the backend. In this way, the user is registered in the database.
