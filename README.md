@@ -14,6 +14,10 @@ Meet the requirements in the `Prerequisites` section: [link](https://developers.
 
 move `json` file to root directory of this project as `credentials.json`
 
+## URL of the Report
+
+[URL of the Report](https://docs.google.com/spreadsheets/d/1xZymSWuICK77f2aWWbgV39CwlwQM8TLLbN-XjZSJaJA/edit?usp=sharing)
+
 ## Used tech-stack
 
 Tech | What used for
