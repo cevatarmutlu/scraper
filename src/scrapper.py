@@ -1,6 +1,9 @@
 import re
 import requests
 from bs4 import BeautifulSoup
+import logging
+
+logger = logging.getLogger(__name__)
 
 def isProductPage(url):
     res = requests.get(url)
@@ -20,16 +23,22 @@ def getProductName(page):
 
 
 def getOffer(priceDiscountSec):
-    offer = priceDiscountSec.find("div", {"class": "detay-indirim"})
-    return 0 if offer == None else offer.text.strip()
+    offerTag = priceDiscountSec.find("div", {"class": "detay-indirim"})
+    offer = 0 if offerTag == None else offerTag.text.strip()
+    logger.info(f"Product offer value: {offer}")
+    return offer
 
 def getProductPrice(priceDiscountSec):
-    productPrice = priceDiscountSec.find("span", {"class": "currencyPrice discountedPrice"})
-    return 0 if productPrice == None else productPrice.text.replace("TL", "").strip()
+    productPriceTag = priceDiscountSec.find("span", {"class": "currencyPrice discountedPrice"})
+    productPrice = 0 if productPriceTag == None else productPriceTag.text.replace("TL", "").strip()
+    logger.info(f"Product price value: {productPrice}")
+    return productPrice
 
 def getSalePrice(priceDiscountSec):
-    salePrice = priceDiscountSec.find("span", {"class": "product-price"})
-    return 0 if salePrice == None else salePrice.text.strip()
+    salePriceTag = priceDiscountSec.find("span", {"class": "product-price"})
+    salePrice = 0 if salePriceTag == None else salePriceTag.text.strip()
+    logger.info(f"Product sale price value: {salePrice}")
+    return salePrice
 
 def getProductAvailability(page):
     newSizeVariant = page.find("div", {"class": re.compile("new-size-variant")})
@@ -38,29 +47,40 @@ def getProductAvailability(page):
     aTagSize = len(aTag)
     passiveTagSize = len(passiveTags)
     
-    productAvailability = (aTagSize - passiveTagSize) * 100 / aTagSize
-    return f"{str(round(productAvailability, 2)).replace('.', ',')}%"
+    productAvailabilityRaw = (aTagSize - passiveTagSize) * 100 / aTagSize
+    productAvailability = f"{str(round(productAvailabilityRaw, 2)).replace('.', ',')}%"
+
+    logger.info(f"Product availability: {productAvailability}")
+    return productAvailability
 
 def getProductCode(page):
-    productCode = page.find("div", {"class": "product-feature-content"}).contents[-1]
-    if productCode == "\n":
-        productCode = page.find("div", {"class": "product-feature-content"}).find("div", {"style": "text-align: left;"}).contents[-1]
+    productCodeRaw = page.find("div", {"class": "product-feature-content"}).contents[-1]
+    if productCodeRaw == "\n":
+        productCodeRaw = page.find("div", {"class": "product-feature-content"}).find("div", {"style": "text-align: left;"}).contents[-1]
     # elif productCode.find("Yerli üretim"):
     #     productCode = productCode.split("Yerli üretim")[1]
-    return 0 if productCode == None else productCode.strip()
+    productCode = 0 if productCodeRaw == None else productCodeRaw.strip()
+    logger.info(f"Product code: {productCode}")
+    return productCode
 
 def scrapper(url):
     page = isProductPage(url=url)
 
     if page != False:
+        logger.info("This page is Product Page")
+        
         productName = getProductName(page)
+        logger.info(f"Product name: {productName}")
 
         priceDiscountSec = page.find("div", {"class": re.compile("price-discount-sec")})
         if priceDiscountSec != None:
+            logger.info(f"In this page included price-discount-sec")
+
             offer = getOffer(priceDiscountSec)
             productPrice = getProductPrice(priceDiscountSec)
             salePrice = getSalePrice(priceDiscountSec)
         else:
+            logger.info("In this page not included price-discount-sec")
             offer = productPrice = salePrice = None
             
         productAvailability = getProductAvailability(page)
@@ -69,8 +89,9 @@ def scrapper(url):
 
         return [url, productCode ,productName, productAvailability, offer, productPrice, salePrice]
     else:
+        logger.info("This page is not Product Page")
         return None
 
-if __name__ == '__main__':
-    url = "https://www.markastok.com/le-ville-tac-orgu-sac-asa-hediye-karlar-ulkesi-kralicesi-elsa-kiz-cocuk-elbise-5804646-mavi"
-    print(scrapper(url))
+# if __name__ == '__main__':
+#     url = "https://www.markastok.com/le-ville-tac-orgu-sac-asa-hediye-karlar-ulkesi-kralicesi-elsa-kiz-cocuk-elbise-5804646-mavi"
+#     print(scrapper(url))

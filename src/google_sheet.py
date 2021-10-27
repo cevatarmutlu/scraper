@@ -6,6 +6,9 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 class GoogleSheet:
     def __init__(self) -> None:
@@ -37,13 +40,15 @@ class GoogleSheet:
         current_time = datetime.now().strftime("%Y-%m-%d-%H")
         spreadsheet = {
             'properties': {
-                'title': f"{sheet_name}_{current_time}"
+                'title': sheet_name
             }
         }
         self.spreadsheet = self.service.spreadsheets().create(body=spreadsheet,
                                         fields='spreadsheetId').execute()
 
         self.write_data(rows)
+
+        logger.info('Google Sheet is Created')
     
     def write_data(self, row):
         values = [
@@ -55,3 +60,11 @@ class GoogleSheet:
         result = self.service.spreadsheets().values().append(
             spreadsheetId=self.spreadsheet.get('spreadsheetId'), range="A1:F1",
             valueInputOption="USER_ENTERED", body=body).execute()
+        
+        logger.info(f'Write Data in `Markastok | Ürün Raporu`: {row}')
+
+if __name__ == '__main__':
+    google_sheet = GoogleSheet()
+    google_sheet.create_sheet("merhaba dünya")
+    for i in range(10):
+        google_sheet.write_data(["URL", "Product Code", "ProductName", "Availability", "Offer", "Product Price", "Sale Price"])
