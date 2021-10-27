@@ -35,6 +35,8 @@ i searched `google app script sort sheet` in google and what i find is `sort` fu
 
 ## What did i learn from this project?
 
+Google app script and Google Sheet API.
+
 ## Additional questions
 
 ### 1. If I’d have 10.000 urls that I should visit, then it takes hours to finish. What can we make to fasten this process?
