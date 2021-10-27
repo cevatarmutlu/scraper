@@ -10,7 +10,7 @@ To python side:
 
 To google sheet operations: 
 
-Meet the requirements in the `Prerequisites` section.: [link](https://developers.google.com/sheets/api/quickstart/python#prerequisites)
+Meet the requirements in the `Prerequisites` section: [link](https://developers.google.com/sheets/api/quickstart/python#prerequisites)
 
 move `json` file to root directory of this project as `credentials.json`
 
