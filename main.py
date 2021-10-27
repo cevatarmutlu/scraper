@@ -1,7 +1,5 @@
-import requests
 from src.scrapper import scrapper
 from src.read_excel import get_urls
-import re
 from src.google_sheet import GoogleSheet
 import logging
 
