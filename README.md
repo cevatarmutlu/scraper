@@ -1,6 +1,6 @@
 ## Introduction
 
-This project is a simple scrapper.
+This project is a simple scrapper and made with python.
 
 ## Install
 
@@ -13,6 +13,18 @@ To google sheet operations:
 Meet the requirements in the `Prerequisites` section: [link](https://developers.google.com/sheets/api/quickstart/python#prerequisites)
 
 move `json` file to root directory of this project as `credentials.json`
+
+## How to use
+
+For create Google Spreadsheet:
+
+    python3 main.py
+
+For create report and send mail:
+
+* Open Google Sheet
+* Select Tools > Script editor from within Google Sheets.
+* Open apps_script and copy the function and paste it the editor.
 
 ## URL of the Report
 
